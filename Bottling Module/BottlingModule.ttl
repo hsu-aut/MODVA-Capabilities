@@ -1,0 +1,284 @@
+@prefix : <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#> .
+@prefix OM: <http://openmath.org/vocab/math#> .
+@prefix CSS: <http://www.w3id.org/hsu-aut/css#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix VDI3682: <http://www.w3id.org/hsu-aut/VDI3682#> .
+@prefix DINEN61360: <http://www.w3id.org/hsu-aut/DINEN61360#> .
+@prefix ModvaProduct: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/product-types#> .
+@prefix ModvaProps: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types#> .
+@prefix MpsProps: <http://www.hsu-hh.de/aut/ontologies/lab/MPS500/property-types#> .
+
+<http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling> rdf:type owl:Ontology ;
+															owl:imports <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types> ,
+																		<http://www.w3id.org/hsu-aut/caskman/4.6.0> .
+
+ModvaProduct:Distillate a owl:Class;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:BottledDistillate a owl:Class;
+	rdfs:subClassOf VDI3682:Product .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#BottlingModule
+:BottlingModule rdf:type owl:NamedIndividual ,
+							VDI2206:Module,
+							CSS:Resource ;
+					CSS:providesCapability :Bottling ;
+					VDI3682:isAssignedTo :Bottling ;
+					DINEN61360:has_Data_Element :BottlingModule_StationID_DE ;
+					VDI3682:isCharacterizedBy :BottlingModule_StationID_ID .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#BottlingModule_StationID_DE
+:BottlingModule_StationID_DE rdf:type owl:NamedIndividual ,
+									DINEN61360:Data_Element ;
+							DINEN61360:has_Instance_Description :BottlingModule_StationID_ID ;
+							DINEN61360:has_Type_Description <http://www.hsu-hh.de/aut/ontologies/lab/MPS500/property-types#StationID_TD> .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#BottlingModule_StationID_ID
+:BottlingModule_StationID_ID rdf:type owl:NamedIndividual ,
+								DINEN61360:Integer,
+								DINEN61360:Instance_Description ,
+								openmath:Variable ;
+			openmath:name "BottlingModule_StationID_ID" ;
+							DINEN61360:Expression_Goal "Actual_Value" ;
+							DINEN61360:Logic_Interpretation "=" ;
+							DINEN61360:Value 15 .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Bottling
+:Bottling rdf:type owl:NamedIndividual ,
+						VDI3682:ProcessOperator ,
+						CaSk:ProvidedCapability ;
+						CSS:requiresCapability :Bottling ;
+				VDI3682:hasInput :Input_Distillate ,
+								:Input_Bottle ,
+								:Input_BottlingMass ;
+				VDI3682:hasOutput :Output_BottledDistillate ;
+				CSS:isRestrictedBy :Constraint_InputBoilingPoints ,
+									:Constraint_OutputBoilingPoints ,
+                                    :Constraint_TotalMass .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Distillate
+:Input_Distillate rdf:type owl:NamedIndividual ,
+								ModvaProduct:Distillate ;
+						DINEN61360:has_Data_Element :Input_Distillate_boilingPoint_DE ,
+													:Input_Distillate_mass_DE ;
+						VDI3682:isCharacterizedBy :Input_Distillate_boilingPoint_ID ,
+													:Input_Distillate_mass_ID .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Distillate_boilingPoint_DE
+:Input_Distillate_boilingPoint_DE rdf:type owl:NamedIndividual ,
+												DINEN61360:Data_Element ,
+												CSS:Property ;
+									DINEN61360:has_Instance_Description :Input_Distillate_boilingPoint_ID ;
+									DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Distillate_boilingPoint_ID
+:Input_Distillate_boilingPoint_ID rdf:type owl:NamedIndividual ,
+					DINEN61360:Integer ,
+					openmath:Variable ,
+					DINEN61360:Instance_Description ;
+					openmath:name "Input_Distillate_boilingPoint_ID" ;
+					DINEN61360:Expression_Goal "Actual_Value" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Distillate_mass_DE
+:Input_Distillate_mass_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ,
+										CSS:Property ;
+							DINEN61360:has_Instance_Description :Input_Distillate_mass_ID ;
+							DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Distillate_mass_ID
+:Input_Distillate_mass_ID rdf:type owl:NamedIndividual ,
+					DINEN61360:Integer ,
+					openmath:Variable ,
+					DINEN61360:Instance_Description ;
+					openmath:name "Input_Distillate_mass_ID" ;
+					DINEN61360:Expression_Goal "Actual_Value" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Bottle
+:Input_Bottle rdf:type owl:NamedIndividual ,
+								MpsProduct:DrilledProduct ;
+						DINEN61360:has_Data_Element :Input_Bottle_InnerDiameter_DE ,
+													:Input_Bottle_DrillingDepth_DE ;
+						VDI3682:isCharacterizedBy :Input_Bottle_InnerDiameter_ID ,
+													:Input_Bottle_DrillingDepth_ID .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Bottle_InnerDiameter_DE
+:Input_Bottle_InnerDiameter_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ,
+										CSS:Property ;
+									DINEN61360:has_Instance_Description :Input_Bottle_InnerDiameter_ID ;
+									DINEN61360:has_Type_Description MpsProps:InnerDiameter_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Bottle_InnerDiameter_ID
+:Input_Bottle_InnerDiameter_ID rdf:type owl:NamedIndividual ,
+					DINEN61360:Integer ,
+					openmath:Variable ,
+					DINEN61360:Instance_Description ;
+					openmath:name "Input_Bottle_InnerDiameter_ID" ;
+					DINEN61360:Expression_Goal "Actual_Value" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Bottle_DrillingDepth_DE
+:Input_Bottle_DrillingDepth_DE rdf:type owl:NamedIndividual ,
+						DINEN61360:Data_Element ,
+						CSS:Property ;
+					DINEN61360:has_Instance_Description :Input_Bottle_DrillingDepth_ID ;
+					DINEN61360:has_Type_Description MpsProps:InnerDiameter_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Bottle_DrillingDepth_ID
+:Input_Bottle_DrillingDepth_ID rdf:type owl:NamedIndividual ,
+					DINEN61360:Integer ,
+					openmath:Variable ,
+					DINEN61360:Instance_Description ;
+					openmath:name "Input_Bottle_DrillingDepth_ID" ;
+					DINEN61360:Expression_Goal "Actual_Value" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_Bottle
+:Input_BottlingMass rdf:type owl:NamedIndividual ,
+								VDI3682:Information ;
+						DINEN61360:has_Data_Element :Input_BottlingMass_DE ;
+						VDI3682:isCharacterizedBy :Input_BottlingMass_ID .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_BottlingMass_DE
+:Input_BottlingMass_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ,
+										CSS:Property ;
+									rdfs:comment "This parameter determines what mass will be bottled" ;
+									DINEN61360:has_Instance_Description :Input_BottlingMass_ID ;
+									DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Input_BottlingMass_ID
+:Input_BottlingMass_ID rdf:type owl:NamedIndividual ,
+					DINEN61360:Integer ,
+					openmath:Variable ,
+					DINEN61360:Instance_Description ;
+					openmath:name "Input_BottlingMass_ID" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#:Output_BottledDistillate
+:Output_BottledDistillate rdf:type owl:NamedIndividual ,
+								ModvaProduct:BottledDistillate ;
+						DINEN61360:has_Data_Element :Output_BottledDistillate_Mass_DE ;
+						VDI3682:isCharacterizedBy :Output_BottledDistillate_Mass_ID .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Output_BottledDistillate_Mass_DE
+:Output_BottledDistillate_Mass_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ,
+										CSS:Property ;
+									DINEN61360:has_Instance_Description :Output_BottledDistillate_Mass_ID ;
+									DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Bottling#Output_BottledDistillate_Mass_ID
+:Output_BottledDistillate_Mass_ID rdf:type owl:NamedIndividual ,
+					DINEN61360:Integer ,
+					openmath:Variable ,
+					DINEN61360:Instance_Description ;
+					openmath:name "Output_BottledDistillate_Mass_ID" ;
+					DINEN61360:Expression_Goal "Assurance" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+#################################################################
+#    Constraints
+#################################################################
+### Output bottled mass will be determined by the input parameter
+:MassContinuationConstraint rdf:type owl:NamedIndividual ,
+										OM:Application ,
+										CSS:CapabilityConstraint ;
+								OM:operator <http://www.openmath.org/cd/relation1#eq>;
+								OM:arguments ( :Output_BottledDistillate_Mass_ID :Input_BottlingMass_ID ) ;
+								CSS:references :Output_BottledDistillate_Mass_ID ,	
+												:Input_BottlingMass_ID .
+
+### Apart from the MassContinuation, the mass is defined by the cylinder's drilling depth and diameter. V = h * pi * (d/2) ^ 2
+# Important: This real mass constraint is hard to implement in SMT. Hence there is a simplified version below
+# :MassConstraint rdf:type owl:NamedIndividual ,
+# 										OM:Application ,
+# 										CSS:CapabilityConstraint ;
+# 								OM:operator <http://www.openmath.org/cd/relation1#eq>;
+# 								OM:arguments ( 
+# 									:Output_BottledDistillate_Mass_ID 
+# 									[
+# 										rdf:type OM:Application ;
+# 										OM:operator <http://www.openmath.org/cd/arith1#times> ;
+# 										OM:arguments ( 
+# 											:Input_Bottle_DrillingDepth_ID
+# 											[
+# 												rdf:type OM:Application ;
+# 												OM:operator <http://www.openmath.org/cd/arith1#times> ;
+# 												OM:arguments ( 
+# 													[
+# 														rdf:type OM:Literal ;
+# 														OM:value 3.14159
+# 													]
+# 													[
+# 														rdf:type OM:Application ;
+# 														OM:operator <http://www.openmath.org/cd/arith1#power> ;
+# 														OM:arguments (
+# 															[
+# 																rdf:type OM:Application ;
+# 																OM:operator <http://www.openmath.org/cd/arith1#divide> ;
+# 																OM:arguments (
+# 																	:Input_Bottle_InnerDiameter_ID
+# 																	[
+# 																		rdf:type OM:Literal ;
+# 																		OM:value 2
+# 																	]
+# 																)
+# 															]
+# 															[
+# 																rdf:type OM:Literal ;
+# 																OM:value 2
+# 															]
+# 														)
+# 													]
+# 												)	
+# 											]
+# 										)	
+# 									]
+# 								) ;
+# 								CSS:references :Output_BottledDistillate_Mass_ID ,	
+# 												:Input_BottlingMass_ID .
+
+
+# Simplified constraint to calculate mass. Pi and density are missing
+:MassConstraint rdf:type owl:NamedIndividual ,
+						OM:Application ,
+						CSS:CapabilityConstraint ;
+					OM:operator <http://www.openmath.org/cd/relation1#eq>;
+					OM:arguments ( 
+						:Output_BottledDistillate_Mass_ID 
+						[
+							rdf:type OM:Application ;
+							OM:operator <http://www.openmath.org/cd/arith1#times> ;
+							OM:arguments ( 
+								:Input_Bottle_DrillingDepth_ID :Input_Bottle_InnerDiameter_ID 3
+							)
+						]
+					) ;
+				CSS:references :Input_Bottle_DrillingDepth_ID ,	
+								:Input_Bottle_InnerDiameter_ID .

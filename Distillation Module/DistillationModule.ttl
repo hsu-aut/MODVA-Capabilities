@@ -1,0 +1,482 @@
+@prefix : <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix CSS: <http://www.w3id.org/hsu-aut/css#> .
+@prefix CaSk: <http://www.w3id.org/hsu-aut/cask#> .
+@prefix OM: <http://openmath.org/vocab/math#> .
+@prefix VDI2206: <http://www.w3id.org/hsu-aut/VDI2206#> .
+@prefix VDI3682: <http://www.w3id.org/hsu-aut/VDI3682#> .
+@prefix DINEN61360: <http://www.w3id.org/hsu-aut/DINEN61360#> .
+@prefix ModvaProduct: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/product-types#> .
+@prefix ModvaProps: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types#> .
+
+<http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation> rdf:type owl:Ontology ;
+															owl:imports <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types> ,
+																		<http://www.w3id.org/hsu-aut/caskman/4.6.0> .
+
+ModvaProduct:Reactant1 a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Reactant2 a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Reactant3 a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Mixture a owl:Class;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Distillate a owl:Class;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Residue a owl:Class;
+	rdfs:subClassOf VDI3682:Product .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation#DistillationModule
+:DistillationModule rdf:type owl:NamedIndividual ,
+							VDI2206:Module,
+							CSS:Resource ;
+					CSS:providesCapability :Distillation ;
+					VDI3682:isAssignedTo :Distillation ;
+					DINEN61360:has_Data_Element :DistillationModule_StationID_DE ;
+					VDI3682:isCharacterizedBy :DistillationModule_StationID_ID .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation#DistillationModule_StationID_DE
+:DistillationModule_StationID_DE rdf:type owl:NamedIndividual ,
+									DINEN61360:Data_Element ;
+							DINEN61360:has_Instance_Description :DistillationModule_StationID_ID ;
+							DINEN61360:has_Type_Description <http://www.hsu-hh.de/aut/ontologies/lab/MPS500/property-types#StationID_TD> .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation#DistillationModule_StationID_ID
+:DistillationModule_StationID_ID rdf:type owl:NamedIndividual ,
+								DINEN61360:Integer,
+								DINEN61360:Instance_Description ,
+								OM:Variable ;
+			OM:name "DistillationModule_StationID_ID" ;
+							DINEN61360:Expression_Goal "Actual_Value" ;
+							DINEN61360:Logic_Interpretation "=" ;
+							DINEN61360:Value 15 .
+
+
+### Distillation
+:Distillation rdf:type owl:NamedIndividual ,
+						VDI3682:ProcessOperator ,
+						CaSk:ProvidedCapability ;
+						CSS:requiresCapability :Distillation ;
+				VDI3682:hasInput :Distillation_input_desiredPurity ,
+								:Distillation_input_liquidMixture ,
+								:Distillation_input_reactant1 ,
+								:Distillation_input_reactant2 ,
+								:Distillation_input_reactant3 ;
+				VDI3682:hasOutput :Distillation_output_distillate ,
+                                    :Distillation_output_residue ;
+				CSS:isRestrictedBy :Constraint_InputBoilingPoints ,
+									:Constraint_OutputBoilingPoints ,
+									:Constraint_PurityContinuation ,
+									:SolidConcentrationReductionConstraint ,
+									:MassContinuationConstraint .
+
+### Distillation_input_desiredPurity
+:Distillation_input_desiredPurity rdf:type owl:NamedIndividual ,
+									VDI3682:Information ;
+								DINEN61360:has_Data_Element :Distillation_input_desiredPurity_DE ;
+								VDI3682:isCharacterizedBy :Distillation_input_desiredPurity_ID1 ,
+														:Distillation_input_desiredPurity_ID2 ,
+														:Distillation_input_desiredPurity_ID3 ;
+								rdfs:comment "Defines the purity that is to be achieved after distillation" .
+
+### Distillation_input_desiredPurity_DE
+:Distillation_input_desiredPurity_DE rdf:type owl:NamedIndividual ,
+											DINEN61360:Data_Element ,
+											CSS:Property ;
+								DINEN61360:has_Instance_Description :Distillation_input_desiredPurity_ID1 ,
+																	:Distillation_input_desiredPurity_ID2 ,
+																	:Distillation_input_desiredPurity_ID3 ;
+								DINEN61360:has_Type_Description ModvaProps:Purity_TD .
+
+### Distillation_input_desiredPurity_ID1
+:Distillation_input_desiredPurity_ID1 rdf:type owl:NamedIndividual ,
+										DINEN61360:Instance_Description ,
+										DINEN61360:Real ,
+										OM:Variable ;
+								OM:name "Distillation_input_desiredPurity_ID1" ;
+								DINEN61360:Expression_Goal "Requirement" ;
+								DINEN61360:Logic_Interpretation ">=" ;
+								DINEN61360:Value 0 .
+
+### Distillation_input_desiredPurity_ID2
+:Distillation_input_desiredPurity_ID2 rdf:type owl:NamedIndividual ,
+										DINEN61360:Instance_Description ,
+										DINEN61360:Real ,
+										OM:Variable ;
+								OM:name "Distillation_input_desiredPurity_ID2" ;
+								DINEN61360:Expression_Goal "Requirement" ;
+								DINEN61360:Logic_Interpretation "<=" ;
+								DINEN61360:Value 1 .
+
+
+### Distillation_input_desiredPurity_ID3
+:Distillation_input_desiredPurity_ID3 rdf:type owl:NamedIndividual ,
+										DINEN61360:Instance_Description ,
+										DINEN61360:Real ,
+										OM:Variable ;
+								OM:name "Distillation_input_desiredPurity_ID3" ;
+								DINEN61360:Logic_Interpretation "=" .
+
+
+### Distillation_input_liquidMixture
+:Distillation_input_liquidMixture rdf:type owl:NamedIndividual ,
+											ModvaProduct:FilteredMixture ;
+									DINEN61360:has_Data_Element :Distillation_input_solidConcentration_DE ,
+																:Distillation_input_mass_DE ;
+									VDI3682:isCharacterizedBy :Distillation_input_solidConcentration_ID1 ,
+															:Distillation_input_solidConcentration_ID2 ,
+																:Distillation_input_mass_ID1 ,
+																:Distillation_input_mass_ID2 ;
+									rdfs:comment "In distillation, a \"liquid mixture\" refers to a solution or blend comprising two or more substances with different boiling points, which are combined in the liquid phase." .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation#Distillation_input_solidConcentration_DE
+:Distillation_input_solidConcentration_DE rdf:type owl:NamedIndividual ,
+												DINEN61360:Data_Element ,
+												CSS:Property ;
+									rdfs:comment "Permissible solid concentration of the input" ;
+									DINEN61360:has_Instance_Description :Distillation_input_solidConcentration_ID1 ,
+																		:Distillation_input_solidConcentration_ID2 ;
+									DINEN61360:has_Type_Description ModvaProps:SolidConcentration_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation#Distillation_input_solidConcentration_ID1
+:Distillation_input_solidConcentration_ID1 rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Distillation_input_solidConcentration_ID1" ;
+					DINEN61360:Expression_Goal "Actual_Value" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Distillation#Distillation_input_solidConcentration_ID2
+:Distillation_input_solidConcentration_ID2 rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Distillation_input_solidConcentration_ID2" ;
+					DINEN61360:Expression_Goal "Requirement" ;
+					DINEN61360:Logic_Interpretation "<=" ;
+					DINEN61360:Value 0.1 .
+
+### Distillation_input_mass_DE
+:Distillation_input_mass_DE rdf:type owl:NamedIndividual ,
+											DINEN61360:Data_Element ,
+											CSS:Property ;
+								DINEN61360:has_Instance_Description :Distillation_input_mass_ID1 ,
+																	:Distillation_input_mass_ID2 ;
+								DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+### Distillation_input_mass_ID1
+:Distillation_input_mass_ID1 rdf:type owl:NamedIndividual ,
+										DINEN61360:Instance_Description ,
+										DINEN61360:Real ,
+										OM:Variable ;
+								OM:name "Distillation_input_mass_ID1" ;
+								DINEN61360:Expression_Goal "Actual_Value" ;
+								DINEN61360:Logic_Interpretation "=" .
+
+
+# Rationale: There must be a certain mass otherwise distillery runs dry
+### Distillation_input_mass_ID2
+:Distillation_input_mass_ID2 rdf:type owl:NamedIndividual ,
+										DINEN61360:Instance_Description ,
+										DINEN61360:Real ,
+										OM:Variable ;
+								OM:name "Distillation_input_mass_ID2" ;
+								DINEN61360:Expression_Goal "Requirement" ;
+								DINEN61360:Logic_Interpretation ">=" ;
+								DINEN61360:Value 0.5 .
+
+
+# This is the fraction of reactant A inside the mixture. Not a separate product, but currently needs to be modeled that way to keep different boiling points 
+### Distillation_input_reactant1
+:Distillation_input_reactant1 rdf:type owl:NamedIndividual ,
+									ModvaProduct:Reactant1 ;
+							DINEN61360:has_Data_Element :Distillation_input_reactant1_boilingPoint_DE ;
+							VDI3682:isCharacterizedBy :Distillation_input_reactant1_boilingPoint_ID .
+
+
+### Distillation_input_reactant1_boilingPoint_DE
+:Distillation_input_reactant1_boilingPoint_DE rdf:type owl:NamedIndividual ,
+                                                         DINEN61360:Data_Element ,
+                                                         CSS:Property ;
+                                                DINEN61360:has_Instance_Description :Distillation_input_reactant1_boilingPoint_ID ;
+                                                DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+### Distillation_input_reactant1_boilingPoint_ID
+:Distillation_input_reactant1_boilingPoint_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Integer ,
+												OM:Variable ;
+												OM:name "Distillation_input_reactant1_boilingPoint_ID" ;
+                                                DINEN61360:Expression_Goal "Actual_Value" ;
+                                                DINEN61360:Logic_Interpretation "=" .
+
+
+# This is the fraction of reactant 2 inside the mixture. Not a separate product, but currently needs to be modeled that way to keep different boiling points 
+### Distillation_input_reactant2
+:Distillation_input_reactant2 rdf:type owl:NamedIndividual ,
+									ModvaProduct:Reactant2 ;
+							DINEN61360:has_Data_Element :Distillation_input_reactant2_boilingPoint_DE ;
+							VDI3682:isCharacterizedBy :Distillation_input_reactant2_boilingPoint_ID .
+
+
+### Distillation_input_reactant2_boilingPoint_DE
+:Distillation_input_reactant2_boilingPoint_DE rdf:type owl:NamedIndividual ,
+                                                         DINEN61360:Data_Element ,
+                                                         CSS:Property ;
+                                                DINEN61360:has_Instance_Description :Distillation_input_reactant2_boilingPoint_ID ;
+                                                DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+### Distillation_input_reactant2_boilingPoint_ID
+:Distillation_input_reactant2_boilingPoint_ID rdf:type owl:NamedIndividual ,
+											DINEN61360:Instance_Description ,
+											DINEN61360:Integer ,
+											OM:Variable ;
+										OM:name "Distillation_input_reactant2_boilingPoint_ID" ;
+										DINEN61360:Expression_Goal "Actual_Value" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+# This is the fraction of reactant 3 inside the mixture. Not a separate product, but currently needs to be modeled that way to keep different boiling points 
+### Distillation_input_reactant3
+:Distillation_input_reactant3 rdf:type owl:NamedIndividual ,
+									ModvaProduct:Reactant3 ;
+							DINEN61360:has_Data_Element :Distillation_input_reactant3_boilingPoint_DE ;
+							VDI3682:isCharacterizedBy :Distillation_input_reactant3_boilingPoint_ID .
+
+
+### Distillation_input_reactant3_boilingPoint_DE
+:Distillation_input_reactant3_boilingPoint_DE rdf:type owl:NamedIndividual ,
+                                                         DINEN61360:Data_Element ,
+                                                         CSS:Property ;
+                                                DINEN61360:has_Instance_Description :Distillation_input_reactant3_boilingPoint_ID ;
+                                                DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+### Distillation_input_reactant3_boilingPoint_ID
+:Distillation_input_reactant3_boilingPoint_ID rdf:type owl:NamedIndividual ,
+											DINEN61360:Instance_Description ,
+											DINEN61360:Integer ,
+											OM:Variable ;
+										OM:name "Distillation_input_reactant3_boilingPoint_ID" ;
+										DINEN61360:Expression_Goal "Actual_Value" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+
+### Distillation_output_distillate
+:Distillation_output_distillate rdf:type owl:NamedIndividual ,
+                                             ModvaProduct:Distillate ;
+                                    DINEN61360:has_Data_Element :Distillation_output_distillate_boilingPoint_DE ,
+                                                                :Distillation_output_distillate_mass_DE ,
+																:Distillation_output_distillate_SolidConcentration_DE ,
+																:Distillation_output_distillate_purity_DE;
+									VDI3682:isCharacterizedBy :Distillation_output_distillate_boilingPoint_ID_AS ,
+                                                                :Distillation_output_distillate_mass_ID_AS ,
+																:Distillation_output_distillate_SolidConcentration_ID ,
+																:Distillation_output_distillate_purity_ID ;
+                                    rdfs:comment "The term \"distillate\" refers to the purified or separated component that is collected after condensation from the vapor phase during the distillation process" .
+
+
+### Distillation_output_distillate_boilingPoint_DE
+:Distillation_output_distillate_boilingPoint_DE rdf:type owl:NamedIndividual ,
+                                                             DINEN61360:Data_Element ;
+                                                    DINEN61360:has_Instance_Description :Distillation_output_distillate_boilingPoint_ID_AS ;
+                                                    DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+### Distillation_output_distillate_boilingPoint_ID_AS
+:Distillation_output_distillate_boilingPoint_ID_AS rdf:type owl:NamedIndividual ,
+														DINEN61360:Instance_Description ,
+														DINEN61360:Integer ,
+														OM:Variable ;
+													OM:name "Distillation_output_distillate_boilingPoint_ID_AS" ;
+													DINEN61360:Expression_Goal "Assurance" ;
+													DINEN61360:Logic_Interpretation "=" .
+
+
+### Distillation_output_distillate_purity_DE
+:Distillation_output_distillate_purity_DE rdf:type owl:NamedIndividual ,
+                                                             DINEN61360:Data_Element ;
+                                                    DINEN61360:has_Instance_Description :Distillation_output_distillate_purity_ID ;
+                                                    DINEN61360:has_Type_Description ModvaProps:Purity_TD .
+
+
+### Distillation_output_distillate_purity_ID
+:Distillation_output_distillate_purity_ID rdf:type owl:NamedIndividual ,
+														DINEN61360:Instance_Description ,
+														DINEN61360:Real ,
+														OM:Variable ;
+													OM:name "Distillation_output_distillate_purity_ID" ;
+													DINEN61360:Expression_Goal "Assurance" ;
+													DINEN61360:Logic_Interpretation "=" .
+
+### Distillation_output_distillate_mass_DE
+:Distillation_output_distillate_mass_DE rdf:type owl:NamedIndividual ,
+                                                     DINEN61360:Data_Element ;
+                                            DINEN61360:has_Instance_Description :Distillation_output_distillate_mass_ID_AS ;
+                                            DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+### Distillation_output_distillate_mass_ID_AS
+:Distillation_output_distillate_mass_ID_AS rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+											OM:name "Distillation_output_distillate_mass_ID_AS" ;
+											DINEN61360:Expression_Goal "Assurance" ;
+											DINEN61360:Logic_Interpretation "=" . 
+
+### Distillation_output_distillate_SolidConcentration_DE
+:Distillation_output_distillate_SolidConcentration_DE rdf:type owl:NamedIndividual ,
+													DINEN61360:Data_Element ;
+                                            DINEN61360:has_Instance_Description :Distillation_output_distillate_SolidConcentration_ID ;
+                                            DINEN61360:has_Type_Description ModvaProps:SolidConcentration_TD .
+
+# After distillation, there are no remaining solids in the distillate
+### Distillation_output_distillate_SolidConcentration_ID
+:Distillation_output_distillate_SolidConcentration_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+											OM:name "Distillation_output_distillate_SolidConcentration_ID" ;
+											DINEN61360:Expression_Goal "Assurance" ;
+											DINEN61360:Logic_Interpretation "=" .
+
+
+### Distillation_output_residue
+:Distillation_output_residue rdf:type owl:NamedIndividual ,
+							ModvaProduct:Residue ;
+					DINEN61360:has_Data_Element :Distillation_output_residue_boilingPoint_DE ,
+												:Distillation_output_residue_mass_DE ;
+					VDI3682:isCharacterizedBy :Distillation_output_residue_boilingPoint_ID_AS ,
+												:Distillation_output_residue_mass_ID_AS ;
+					rdfs:comment "In distillation, the \"residue\" refers to the portion of the original liquid mixture that remains in the distillation apparatus after the more volatile components have evaporated and been collected as distillate." .
+
+
+### Distillation_output_residue_boilingPoint_DE
+:Distillation_output_residue_boilingPoint_DE rdf:type owl:NamedIndividual ,
+												DINEN61360:Data_Element ;
+										DINEN61360:has_Instance_Description :Distillation_output_residue_boilingPoint_ID_AS ;
+										DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+### Distillation_output_residue_boilingPoint_ID_AS
+:Distillation_output_residue_boilingPoint_ID_AS rdf:type owl:NamedIndividual ,
+											DINEN61360:Instance_Description ,
+											DINEN61360:Integer ,
+											OM:Variable ;
+										OM:name "Distillation_output_residue_boilingPoint_ID_AS" ;
+										DINEN61360:Expression_Goal "Assurance" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+### Distillation_output_residue_mass_DE
+:Distillation_output_residue_mass_DE rdf:type owl:NamedIndividual ,
+												DINEN61360:Data_Element ,
+												CSS:Property ;
+										DINEN61360:has_Instance_Description :Distillation_output_residue_mass_ID_AS ;
+										DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+### Distillation_output_residue_mass_ID_AS
+:Distillation_output_residue_mass_ID_AS rdf:type owl:NamedIndividual ,
+										DINEN61360:Instance_Description ,
+										DINEN61360:Real ,
+										OM:Variable ;
+									OM:name "Distillation_output_residue_mass_ID_AS" ;
+									DINEN61360:Expression_Goal "Assurance" ;
+									DINEN61360:Logic_Interpretation "=" .
+
+#################################################################
+#    Constraints
+#################################################################
+### DistillationConstraint_InputBoilingPoints
+:Constraint_InputBoilingPoints rdf:type owl:NamedIndividual ,
+                                            OM:Application ,
+                                            CSS:CapabilityConstraint ;
+									OM:operator <http://www.openmath.org/cd/relation1#neq>;
+									OM:arguments ( :Distillation_input_reactant1_boilingPoint_ID :Distillation_input_reactant2_boilingPoint_ID ) ;
+									CSS:references :Distillation_input_reactant1_boilingPoint_ID ,	
+													:Distillation_input_reactant2_boilingPoint_ID .
+
+
+### DistillationConstraint_OutputBoilingPoints
+:Constraint_OutputBoilingPoints rdf:type owl:NamedIndividual ,
+											OM:Application ,
+											CSS:CapabilityConstraint ;
+									OM:operator <http://www.openmath.org/cd/relation1#lt>;
+									OM:arguments ( :Distillation_output_distillate_boilingPoint_ID_AS :Distillation_output_residue_boilingPoint_ID_AS) ;
+									CSS:references :Distillation_output_distillate_boilingPoint_ID_AS ,
+													:Distillation_output_residue_boilingPoint_ID_AS .
+
+# Purity info will be passed to output on successful execution
+:Constraint_PurityContinuation rdf:type owl:NamedIndividual ,
+                                            OM:Application ,
+                                            CSS:CapabilityConstraint ;
+									OM:operator <http://www.openmath.org/cd/relation1#eq>;
+									OM:arguments ( :Distillation_input_desiredPurity_ID3 :Distillation_output_distillate_purity_ID ) ;
+									CSS:references :Distillation_input_desiredPurity_ID3 ,	
+													:Distillation_output_distillate_purity_ID .
+
+# Simplified mass conservation, see real deal below
+:MassContinuationConstraint rdf:type owl:NamedIndividual ,
+                                            OM:Application ,
+                                            CSS:CapabilityConstraint ;
+									OM:operator <http://www.openmath.org/cd/relation1#eq>;
+									OM:arguments ( :Distillation_input_mass_ID1 :Distillation_output_distillate_mass_ID_AS ) ;
+									CSS:references :Distillation_input_mass_ID1 ,	
+													:Distillation_output_distillate_mass_ID_AS .
+
+# Reduction of solid concentration to almost zero
+:SolidConcentrationReductionConstraint rdf:type owl:NamedIndividual ,
+                                            OM:Application ,
+                                            CSS:CapabilityConstraint ;
+									OM:operator <http://www.openmath.org/cd/relation1#eq>;
+									OM:arguments ( 
+										:Distillation_output_distillate_SolidConcentration_ID
+										[
+											rdf:type OM:Application ;
+											OM:operator <http://www.openmath.org/cd/arith1#times> ;
+											OM:arguments ( 
+												:Distillation_input_solidConcentration_ID1 
+												[
+													rdf:type OM:Literal;
+													OM:value 0.001
+												] ) ;
+										] 
+									) ;
+									CSS:references :Distillation_output_distillate_SolidConcentration_ID ,	
+													:Distillation_input_solidConcentration_ID1 .
+
+# Note:Doesn't work yet
+### Mass conservation. Mass of Input mixture must be equal to sum of outputs
+# :Constraint_TotalMass rdf:type owl:NamedIndividual ,
+# 							OM:Application ,
+# 							CSS:CapabilityConstraint ;
+# 					OM:operator <http://www.openmath.org/cd/relation1#eq>;
+# 					OM:arguments ( 
+# 						:Distillation_input_mass_ID1
+# 						[
+# 							rdf:type OM:Application ;
+# 							OM:operator <http://www.openmath.org/cd/arith1#plus> ;
+# 							OM:arguments ( :Distillation_output_residue_mass_ID_AS :Distillation_output_distillate_mass_ID_AS ) ;
+# 						] 
+# 					) ;
+# 					CSS:references :Distillation_input_mass_ID1 ,
+# 									:Distillation_output_residue_mass_ID_AS ,	
+# 									:Distillation_output_distillate_mass_ID_AS .

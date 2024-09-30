@@ -1,0 +1,219 @@
+@prefix : <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix CSS: <http://www.w3id.org/hsu-aut/css#> .
+@prefix CaSk: <http://www.w3id.org/hsu-aut/cask#> .
+@prefix OM: <http://openmath.org/vocab/math#> .
+@prefix VDI2206: <http://www.w3id.org/hsu-aut/VDI2206#> .
+@prefix VDI3682: <http://www.w3id.org/hsu-aut/VDI3682#> .
+@prefix DINEN61360: <http://www.w3id.org/hsu-aut/DINEN61360#> .
+@prefix ModvaProduct: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/product-types#> .
+@prefix ModvaProps: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types#> .
+
+<http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration> rdf:type owl:Ontology ;
+															owl:imports <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types> ,
+																		<http://www.w3id.org/hsu-aut/caskman/4.6.0> .
+
+ModvaProduct:Mixture a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:FilteredMixture a owl:Class;
+	rdfs:subClassOf VDI3682:Product .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#FiltrationModule
+:FiltrationModule rdf:type owl:NamedIndividual ,
+							VDI2206:Module,
+							CSS:Resource ;
+					CSS:providesCapability :Filtration ;
+					VDI3682:isAssignedTo :Filtration .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Filtration
+:Filtration rdf:type owl:NamedIndividual ,
+						VDI3682:ProcessOperator ,
+						CaSk:ProvidedCapability ;
+						CSS:requiresCapability :Filtration ;
+				VDI3682:hasInput :Input_UnfilteredMixture ,
+								:Input_AllowedSolidConcentration ;
+				VDI3682:hasOutput :Output_FilteredLiquid ;
+				CSS:isRestrictedBy :SolidConcentrationContinuationConstraint ,
+									:MassContinuationConstraint .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_UnfilteredMixture
+:Input_UnfilteredMixture rdf:type owl:NamedIndividual ,
+								ModvaProduct:Mixture ;
+						DINEN61360:has_Data_Element :Input_Mass_DE ,
+											:Input_SolidConcentration_DE ;
+						VDI3682:isCharacterizedBy :Input_Mass_ID1 ,
+											:Input_Mass_ID2,
+											:Input_SolidConcentration_ID .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_Mass_DE
+:Input_Mass_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ,
+										CSS:Property ;
+									rdfs:comment "Mass of the unfiltered input" ;
+									DINEN61360:has_Instance_Description :Input_Mass_ID1 ,
+																		:Input_Mass_ID2 ;
+									DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_Mass_ID1
+:Input_Mass_ID1 rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Input_Mass_ID1" ;
+					DINEN61360:Expression_Goal "Actual_Value" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_Mass_ID2
+:Input_Mass_ID2 rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Input_Mass_ID2" ;
+					DINEN61360:Expression_Goal "Requirement" ;
+					DINEN61360:Logic_Interpretation ">=" ;
+					DINEN61360:Value 0.5 .
+
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_SolidConcentration_DE
+:Input_SolidConcentration_DE rdf:type owl:NamedIndividual ,
+												DINEN61360:Data_Element ,
+												CSS:Property ;
+									rdfs:comment "Solid concentration of the unfiltered input" ;
+									DINEN61360:has_Instance_Description :Input_SolidConcentration_ID ;
+									DINEN61360:has_Type_Description ModvaProps:SolidConcentration_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_SolidConcentration_ID
+:Input_SolidConcentration_ID rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Input_SolidConcentration_ID" ;
+					DINEN61360:Expression_Goal "Actual_Value" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_AllowedSolidConcentration
+:Input_AllowedSolidConcentration rdf:type owl:NamedIndividual ,
+								VDI3682:Information ;
+						DINEN61360:has_Data_Element :Input_AllowedSolidConcentration_DE ;
+						VDI3682:isCharacterizedBy :Input_AllowedSolidConcentration_ID1 ,
+												:Input_AllowedSolidConcentration_ID2 ,
+												:Input_AllowedSolidConcentration_ID3 .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_AllowedSolidConcentration_DE
+:Input_AllowedSolidConcentration_DE rdf:type owl:NamedIndividual ,
+												DINEN61360:Data_Element ,
+												CSS:Property ;
+									rdfs:comment "Parameter to set the allowed solid concentration after filtering" ;
+									DINEN61360:has_Instance_Description :Input_AllowedSolidConcentration_ID1 ,
+																		:Input_AllowedSolidConcentration_ID2 ,
+																		:Input_AllowedSolidConcentration_ID3 ;
+									DINEN61360:has_Type_Description ModvaProps:SolidConcentration_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_AllowedSolidConcentration_ID1
+:Input_AllowedSolidConcentration_ID1 rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Input_AllowedSolidConcentration_ID1" ;
+					DINEN61360:Expression_Goal "Requirement" ;
+					DINEN61360:Logic_Interpretation ">=" ;
+					DINEN61360:Value 0 .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_AllowedSolidConcentration_ID2
+:Input_AllowedSolidConcentration_ID2 rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Input_AllowedSolidConcentration_ID2" ;
+					DINEN61360:Expression_Goal "Requirement" ;
+					DINEN61360:Logic_Interpretation "<=" ;
+					DINEN61360:Value 1 .
+
+
+# This is the parameter to be set by planning
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Input_AllowedSolidConcentration_ID3
+:Input_AllowedSolidConcentration_ID3 rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Input_AllowedSolidConcentration_ID3" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#:Output_FilteredLiquid
+:Output_FilteredLiquid rdf:type owl:NamedIndividual ,
+								ModvaProduct:FilteredMixture ;
+						DINEN61360:has_Data_Element :Output_Mass_DE ,
+													:Output_SolidConcentration_DE ;
+						VDI3682:isCharacterizedBy :Output_Mass_ID ,
+												:Output_SolidConcentration_ID .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Output_Mass_DE
+:Output_Mass_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ,
+										CSS:Property ;
+									rdfs:comment "Mass of the filtered output" ;
+									DINEN61360:has_Instance_Description :Output_Mass_ID ;
+									DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Output_Mass_ID
+:Output_Mass_ID rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Output_Mass_ID" ;
+					DINEN61360:Expression_Goal "Assurance" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Output_SolidConcentration_DE
+:Output_SolidConcentration_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ,
+										CSS:Property ;
+									rdfs:comment "Solid concentration of the filtered output" ;
+									DINEN61360:has_Instance_Description :Output_SolidConcentration_ID ;
+									DINEN61360:has_Type_Description ModvaProps:SolidConcentration_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/Filtration#Output_SolidConcentration_ID
+:Output_SolidConcentration_ID rdf:type owl:NamedIndividual ,
+						DINEN61360:Instance_Description ,
+						DINEN61360:Real ,
+						OM:Variable ; 
+					OM:name "Output_SolidConcentration_ID" ;
+					DINEN61360:Expression_Goal "Assurance" ;
+					DINEN61360:Logic_Interpretation "=" .
+
+
+
+#################################################################
+#    Constraints
+#################################################################
+### Output solid concentration is determined by the input parameter
+:SolidConcentrationContinuationConstraint rdf:type owl:NamedIndividual ,
+										OM:Application ,
+										CSS:CapabilityConstraint ;
+								OM:operator <http://www.openmath.org/cd/relation1#eq>;
+								OM:arguments ( :Input_AllowedSolidConcentration_ID3 :Output_SolidConcentration_ID ) ;
+								CSS:references :Input_AllowedSolidConcentration_ID3 ,	
+												:Output_SolidConcentration_ID .
+
+### Just set output mass  to input mass
+:MassContinuationConstraint rdf:type owl:NamedIndividual ,
+										OM:Application ,
+										CSS:CapabilityConstraint ;
+								OM:operator <http://www.openmath.org/cd/relation1#eq>;
+								OM:arguments ( :Input_Mass_ID1 :Output_Mass_ID ) ;
+								CSS:references :Input_Mass_ID1 ,	
+												:Output_Mass_ID .

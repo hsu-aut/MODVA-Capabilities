@@ -1,0 +1,47 @@
+@prefix : <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix DINEN61360: <http://www.w3id.org/hsu-aut/DINEN61360#> .
+
+<http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types> rdf:type owl:Ontology ;
+                                                                owl:imports <http://www.w3id.org/hsu-aut/DINEN61360/2.0.1> ;
+                                                                rdfs:comment "A little ontology that contains all property type definitions used for the MODVA lab plant" .
+
+
+:BoilingPoint_TD rdf:type owl:NamedIndividual ,
+			DINEN61360:Type_Description ;
+			DINEN61360:Definition "The boiling point of a liquid is the temperature at which its vapor pressure equals the atmospheric pressure surrounding the liquid, causing it to transition from the liquid phase to the vapor (gas) phase" ;
+			DINEN61360:Unit_of_Measure "K" .
+
+
+:Mass_TD rdf:type owl:NamedIndividual ,
+			DINEN61360:Type_Description ;
+			DINEN61360:Definition "Mass is a fundamental property of physical objects that quantifies the amount of matter within them. It's a measure of an object's resistance to acceleration when a force is applied." ;
+			DINEN61360:Unit_of_Measure "kg" .
+
+
+:MassFraction_TD rdf:type owl:NamedIndividual ,
+			DINEN61360:Type_Description ;
+			DINEN61360:Definition "Type description of mass fraction, i.e., the mass of a part divided by the total mass of all parts in a mix" .
+
+:Volume_TD rdf:type owl:NamedIndividual ,
+			DINEN61360:Type_Description ;
+			DINEN61360:Definition "Type description for volumes, a measure of regions in 3D" ;
+			DINEN61360:Unit_of_Measure "l" .
+
+
+:VolumeFraction_TD rdf:type owl:NamedIndividual ,
+			DINEN61360:Type_Description ;
+			DINEN61360:Definition "Type description of volume fraction, i.e., the volume of a liquid divided by the total volume of all liquids in a mix" .
+
+:Purity_TD rdf:type owl:NamedIndividual ,
+			DINEN61360:Type_Description ;
+			DINEN61360:Definition "The proportion of a named pure substance in a sample" .
+
+
+:SolidConcentration_TD rdf:type owl:NamedIndividual ,
+			DINEN61360:Type_Description ;
+			DINEN61360:Definition "Concentration of solids in a fluid" .

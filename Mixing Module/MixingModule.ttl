@@ -1,0 +1,464 @@
+@prefix : <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix CSS: <http://www.w3id.org/hsu-aut/css#> .
+@prefix CaSk: <http://www.w3id.org/hsu-aut/cask#> .
+@prefix OM: <http://openmath.org/vocab/math#> .
+@prefix VDI2206: <http://www.w3id.org/hsu-aut/VDI2206#> .
+@prefix VDI3682: <http://www.w3id.org/hsu-aut/VDI3682#> .
+@prefix DINEN61360: <http://www.w3id.org/hsu-aut/DINEN61360#> .
+@prefix ModvaProduct: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/product-types#> .
+@prefix ModvaProps: <http://www.hsu-hh.de/aut/ontologies/lab/MODVA/property-types#> .
+
+<http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule> rdf:type owl:Ontology ;
+                                                                        owl:imports <https://w3id.org/hsu-aut/cask/2.5.3> .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+# Subclasses for products:
+ModvaProduct:Reactant1 a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Reactant2 a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Reactant3 a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+ModvaProduct:Mixture a owl:Class ;
+	rdfs:subClassOf VDI3682:Product .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#MixingModule
+:MixingModule rdf:type owl:NamedIndividual ,
+							VDI2206:Module,
+							CSS:Resource ;
+					CSS:providesCapability :Mixing ;
+					VDI3682:isAssignedTo :Mixing .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing
+:Mixing rdf:type owl:NamedIndividual ,
+                    VDI3682:ProcessOperator ,
+                    CaSk:ProvidedCapability ;
+		CSS:requiresCapability :Mixing;
+		VDI3682:hasInput :Mixing_input_liquid1 ,
+						:Mixing_input_liquid1_massFraction ,
+						:Mixing_input_liquid2 ,
+						:Mixing_input_liquid2_massFraction ,
+						:Mixing_input_liquid3 ,
+						:Mixing_input_liquid3_massFraction ,
+						:Mixing_input_totalMass ;
+		VDI3682:hasOutput :Mixing_output ;
+		CSS:isRestrictedBy :TotalMassConstraint ,
+							:TotalMassContinuationConstraint ,
+							:Liquid1MassFractionConstraint ,
+							:Liquid2MassFractionConstraint ,
+							:Liquid3MassFractionConstraint .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid1
+:Mixing_input_liquid1 rdf:type owl:NamedIndividual ,
+								ModvaProduct:Reactant1 ;
+							DINEN61360:has_Data_Element :Mixing_input_liquid1_BoilingPoint_DE ;
+							VDI3682:isCharacterizedBy :Mixing_input_liquid1_BoilingPoint_ID .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid1_BoilingPoint_DE
+:Mixing_input_liquid1_BoilingPoint_DE rdf:type owl:NamedIndividual ,
+									DINEN61360:Data_Element ,
+									CSS:Property ;
+							DINEN61360:has_Instance_Description :Mixing_input_liquid1_BoilingPoint_ID ;
+							DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid1_BoilingPoint_ID
+:Mixing_input_liquid1_BoilingPoint_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+										OM:name "Mixing_input_liquid1_BoilingPoint_ID" ;
+										DINEN61360:Expression_Goal "Actual_Value" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid1_massFraction
+:Mixing_input_liquid1_massFraction rdf:type owl:NamedIndividual ,
+												VDI3682:Information ;
+                                        DINEN61360:has_Data_Element :Mixing_input_liquid1_massFraction_DE ;
+										VDI3682:isCharacterizedBy :Mixing_input_liquid1_massFraction_ID ,
+																:Mixing_input_liquid1_massFraction_ID_Req .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid1_massFraction_DE
+:Mixing_input_liquid1_massFraction_DE rdf:type owl:NamedIndividual ,
+												DINEN61360:Data_Element ,
+												CSS:Property ;
+										DINEN61360:has_Instance_Description :Mixing_input_liquid1_massFraction_ID ,
+																			:Mixing_input_liquid1_massFraction_ID_Req ;
+										DINEN61360:has_Type_Description ModvaProps:MassFraction_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid1_massFraction_ID
+:Mixing_input_liquid1_massFraction_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+										OM:name "Mixing_input_liquid1_massFraction_ID" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid1_massFraction_ID_Req
+:Mixing_input_liquid1_massFraction_ID_Req rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+										OM:name "Mixing_input_liquid1_massFraction_ID_Req" ;
+										DINEN61360:Expression_Goal "Requirement" ;
+										DINEN61360:Logic_Interpretation "<=" ;
+										DINEN61360:Value 0.5 .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2
+:Mixing_input_liquid2 rdf:type owl:NamedIndividual ,
+								ModvaProduct:Reactant2 ;
+								DINEN61360:has_Data_Element :Mixing_input_liquid2_BoilingPoint_DE ;
+								VDI3682:isCharacterizedBy :Mixing_input_liquid2_BoilingPoint_ID .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2_BoilingPoint_DE
+:Mixing_input_liquid2_BoilingPoint_DE rdf:type owl:NamedIndividual ,
+									DINEN61360:Data_Element ,
+									CSS:Property ;
+							DINEN61360:has_Instance_Description :Mixing_input_liquid2_BoilingPoint_ID ;
+							DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2_BoilingPoint_ID
+:Mixing_input_liquid2_BoilingPoint_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+										OM:name "Mixing_input_liquid2_BoilingPoint_ID" ;
+										DINEN61360:Expression_Goal "Actual_Value" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2_massFraction
+:Mixing_input_liquid2_massFraction rdf:type owl:NamedIndividual ,
+												VDI3682:Information ;
+									DINEN61360:has_Data_Element :Mixing_input_liquid2_massFraction_DE ;
+									VDI3682:isCharacterizedBy :Mixing_input_liquid2_massFraction_ID ,
+													:Mixing_input_liquid2_massFraction_ID_Req1 ,
+													:Mixing_input_liquid2_massFraction_ID_Req2 .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2_massFraction_DE
+:Mixing_input_liquid2_massFraction_DE rdf:type owl:NamedIndividual ,
+                                                    DINEN61360:Data_Element ,
+                                                    CSS:Property ;
+										DINEN61360:has_Instance_Description :Mixing_input_liquid2_massFraction_ID ,
+																			:Mixing_input_liquid2_massFraction_ID_Req1 ,
+																			:Mixing_input_liquid2_massFraction_ID_Req2 ;
+										DINEN61360:has_Type_Description ModvaProps:MassFraction_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2_massFraction_ID
+:Mixing_input_liquid2_massFraction_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+										OM:name "Mixing_input_liquid2_massFraction_ID" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2_massFraction_ID_Req1
+:Mixing_input_liquid2_massFraction_ID_Req1 rdf:type owl:NamedIndividual ,
+													DINEN61360:Instance_Description ,
+													DINEN61360:Real ,
+													OM:Variable ;
+												OM:name "Mixing_input_liquid2_massFraction_ID_Req1" ;
+                                                DINEN61360:Expression_Goal "Requirement" ;
+                                                DINEN61360:Logic_Interpretation ">=" ;
+                                                DINEN61360:Value 0.2 .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid2_massFraction_ID_Req2
+:Mixing_input_liquid2_massFraction_ID_Req2 rdf:type owl:NamedIndividual ,
+													DINEN61360:Instance_Description ,
+													DINEN61360:Real ,
+													OM:Variable ;
+												OM:name "Mixing_input_liquid2_massFraction_ID_Req2" ;
+                                                DINEN61360:Expression_Goal "Requirement" ;
+                                                DINEN61360:Logic_Interpretation "<=" ;
+                                                DINEN61360:Value 0.5 .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid3
+:Mixing_input_liquid3 rdf:type owl:NamedIndividual ,
+								ModvaProduct:Reactant3 ;
+								DINEN61360:has_Data_Element :Mixing_input_liquid3_BoilingPoint_DE ;
+								VDI3682:isCharacterizedBy :Mixing_input_liquid3_BoilingPoint_ID .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid3_BoilingPoint_DE
+:Mixing_input_liquid3_BoilingPoint_DE rdf:type owl:NamedIndividual ,
+									DINEN61360:Data_Element ,
+									CSS:Property ;
+							DINEN61360:has_Instance_Description :Mixing_input_liquid3_BoilingPoint_ID ;
+							DINEN61360:has_Type_Description ModvaProps:BoilingPoint_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid3_BoilingPoint_ID
+:Mixing_input_liquid3_BoilingPoint_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+										OM:name "Mixing_input_liquid3_BoilingPoint_ID" ;
+										DINEN61360:Expression_Goal "Actual_Value" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid3_massFraction
+:Mixing_input_liquid3_massFraction rdf:type owl:NamedIndividual ,
+												VDI3682:Information ;
+                                        DINEN61360:has_Data_Element :Mixing_input_liquid3_massFraction_DE ;
+										VDI3682:isCharacterizedBy :Mixing_input_liquid3_massFraction_ID ,
+																:Mixing_input_liquid3_massFraction_ID_Req .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid3_massFraction_DE
+:Mixing_input_liquid3_massFraction_DE rdf:type owl:NamedIndividual ,
+                                                    DINEN61360:Data_Element ;
+										DINEN61360:has_Instance_Description :Mixing_input_liquid3_massFraction_ID ,
+																			:Mixing_input_liquid3_massFraction_ID_Req ;
+										DINEN61360:has_Type_Description ModvaProps:MassFraction_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid3_massFraction_ID
+:Mixing_input_liquid3_massFraction_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ;
+										OM:name "Mixing_input_liquid3_massFraction_ID";
+										DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_liquid3_massFraction_ID_Req
+:Mixing_input_liquid3_massFraction_ID_Req rdf:type owl:NamedIndividual ,
+													DINEN61360:Instance_Description ,
+													DINEN61360:Real ,
+													OM:Variable ;
+											OM:name "Mixing_input_liquid3_massFraction_ID_Req";
+											DINEN61360:Expression_Goal "Requirement" ;
+											DINEN61360:Logic_Interpretation "<=" ;
+											DINEN61360:Value 0.1 .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_totalMass
+:Mixing_input_totalMass rdf:type owl:NamedIndividual ,
+									VDI3682:Information ;
+							DINEN61360:has_Data_Element :Mixing_input_totalMass_DE ;
+							VDI3682:isCharacterizedBy :Mixing_input_totalMass_ID ,
+													:Mixing_input_totalMass_ID_Req .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_totalMass_DE
+:Mixing_input_totalMass_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ;
+                                DINEN61360:has_Instance_Description :Mixing_input_totalMass_ID ,
+                                                                    :Mixing_input_totalMass_ID_Req ;
+                                DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_totalMass_ID
+:Mixing_input_totalMass_ID rdf:type owl:NamedIndividual ,
+										DINEN61360:Instance_Description ,
+										DINEN61360:Real ,
+										OM:Variable ;
+							OM:name "Mixing_input_totalMass_ID" ;
+							DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_input_totalMass_ID_Req
+:Mixing_input_totalMass_ID_Req rdf:type owl:NamedIndividual ,
+											DINEN61360:Instance_Description ,
+											DINEN61360:Real ,
+											OM:Variable ;
+									OM:name "Mixing_input_totalMass_ID_Req" ;
+                                    DINEN61360:Expression_Goal "Requirement" ;
+                                    DINEN61360:Logic_Interpretation "<=" ;
+                                    DINEN61360:Value 10 .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output
+:Mixing_output rdf:type owl:NamedIndividual ,
+						ModvaProduct:Mixture ;
+				DINEN61360:has_Data_Element :Mixing_output_totalMass_DE ,
+										:Mixing_output_SolidConcentration_DE ,
+										:Mixing_output_liquid1_massFraction_DE ,
+										:Mixing_output_liquid2_massFraction_DE ,
+										:Mixing_output_liquid3_massFraction_DE ;
+				VDI3682:isCharacterizedBy :Mixing_output_totalMass_ID_AS ,
+										:Mixing_output_SolidConcentration_ID ,
+										:Mixing_output_liquid1_massFraction_ID ,
+										:Mixing_output_liquid2_massFraction_ID ,
+										:Mixing_output_liquid3_massFraction_ID ;
+				rdfs:comment "The mixed output product that consists of the three input liquids mixed in a certain fraction" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_totalMass_DE
+:Mixing_output_totalMass_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ;
+								DINEN61360:has_Instance_Description :Mixing_output_totalMass_ID_AS ;
+								DINEN61360:has_Type_Description ModvaProps:Mass_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_totalMass_ID_AS
+:Mixing_output_totalMass_ID_AS rdf:type owl:NamedIndividual ,
+											DINEN61360:Instance_Description ,
+											DINEN61360:Real ,
+											OM:Variable ; 
+									OM:name "Mixing_output_totalMass_ID_AS" ;
+                                    DINEN61360:Expression_Goal "Assurance" ;
+                                    DINEN61360:Logic_Interpretation "=" .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_SolidConcentration_DE
+:Mixing_output_SolidConcentration_DE rdf:type owl:NamedIndividual ,
+										DINEN61360:Data_Element ;
+								DINEN61360:has_Instance_Description :Mixing_output_SolidConcentration_ID ;
+								DINEN61360:has_Type_Description ModvaProps:SolidConcentration_TD .
+
+
+# Mixing has to introduce a solid concentration for filtration to make sense. This is simplified here, should ideally depend, e.g., on the fraction of a component
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_SolidConcentration_ID
+:Mixing_output_SolidConcentration_ID rdf:type owl:NamedIndividual ,
+											DINEN61360:Instance_Description ,
+											DINEN61360:Real ,
+											OM:Variable ; 
+									OM:name "Mixing_output_SolidConcentration_ID" ;
+                                    DINEN61360:Expression_Goal "Assurance" ;
+                                    DINEN61360:Logic_Interpretation "=" ;
+									DINEN61360:Value 0.8 .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_liquid1_massFraction_DE
+:Mixing_output_liquid1_massFraction_DE rdf:type owl:NamedIndividual ,
+                                                    DINEN61360:Data_Element ,
+                                                    CSS:Property ;
+										DINEN61360:has_Instance_Description :Mixing_output_liquid1_massFraction_ID ;
+										DINEN61360:has_Type_Description ModvaProps:MassFraction_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_liquid1_massFraction_ID
+:Mixing_output_liquid1_massFraction_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ; 
+										OM:name "Mixing_output_liquid1_massFraction_ID" ;
+										DINEN61360:Expression_Goal "Assurance" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_liquid2_massFraction_DE
+:Mixing_output_liquid2_massFraction_DE rdf:type owl:NamedIndividual ,
+                                                    DINEN61360:Data_Element ,
+                                                    CSS:Property ;
+										DINEN61360:has_Instance_Description :Mixing_output_liquid2_massFraction_ID ;
+										DINEN61360:has_Type_Description ModvaProps:MassFraction_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_liquid2_massFraction_ID
+:Mixing_output_liquid2_massFraction_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ; 
+										OM:name "Mixing_output_liquid2_massFraction_ID" ;
+										DINEN61360:Expression_Goal "Assurance" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_liquid3_massFraction_DE
+:Mixing_output_liquid3_massFraction_DE rdf:type owl:NamedIndividual ,
+                                                    DINEN61360:Data_Element ,
+                                                    CSS:Property ;
+										DINEN61360:has_Instance_Description :Mixing_output_liquid3_massFraction_ID ;
+										DINEN61360:has_Type_Description ModvaProps:MassFraction_TD .
+
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#Mixing_output_liquid3_massFraction_ID
+:Mixing_output_liquid3_massFraction_ID rdf:type owl:NamedIndividual ,
+												DINEN61360:Instance_Description ,
+												DINEN61360:Real ,
+												OM:Variable ; 
+										OM:name "Mixing_output_liquid3_massFraction_ID" ;
+										DINEN61360:Expression_Goal "Assurance" ;
+										DINEN61360:Logic_Interpretation "=" .
+
+
+
+#################################################################
+#    Constraints
+#################################################################
+
+###  http://www.hsu-hh.de/aut/ontologies/lab/MODVA/MixingModule#TotalMassConstraint
+:TotalMassConstraint rdf:type owl:NamedIndividual ,
+								OM:Application ,
+								CSS:CapabilityConstraint ;
+						OM:arguments ( 
+							[
+								rdf:type OM:Literal ;
+								OM:value 1 
+							]
+							[
+								rdf:type OM:Application ;
+								OM:arguments ( :Mixing_input_liquid1_massFraction_ID :Mixing_input_liquid2_massFraction_ID :Mixing_input_liquid3_massFraction_ID ) ;
+								OM:operator <http://www.openmath.org/cd/arith1#plus> 
+							]
+							) ;
+						OM:operator <http://www.openmath.org/cd/relation1#eq> ;
+						CSS:references :Mixing_input_liquid1_massFraction_ID,
+										:Mixing_input_liquid2_massFraction_ID,
+										:Mixing_input_liquid3_massFraction_ID.
+
+### Mass info is set as output
+:TotalMassContinuationConstraint rdf:type owl:NamedIndividual ,
+											OM:Application ,
+											CSS:CapabilityConstraint ;
+									OM:arguments (:Mixing_input_totalMass_ID :Mixing_output_totalMass_ID_AS);
+									OM:operator <http://www.openmath.org/cd/relation1#eq> ;
+									CSS:references :Mixing_input_totalMass_ID ,
+													:Mixing_output_totalMass_ID_AS . 
+
+###  Liquid1 mass fraction is passed to output
+:Liquid1MassFractionConstraint rdf:type owl:NamedIndividual ,
+											OM:Application ,
+											CSS:CapabilityConstraint ;
+									OM:arguments (:Mixing_output_liquid1_massFraction_ID :Mixing_input_liquid1_massFraction_ID);
+									OM:operator <http://www.openmath.org/cd/relation1#eq> ;
+									CSS:references :Mixing_output_liquid1_massFraction_ID ,
+													:Mixing_input_liquid1_massFraction_ID  .
+
+###  Liquid2 mass fraction is passed to output
+:Liquid2MassFractionConstraint rdf:type owl:NamedIndividual ,
+											OM:Application ,
+											CSS:CapabilityConstraint ;
+									OM:arguments (:Mixing_output_liquid2_massFraction_ID :Mixing_input_liquid2_massFraction_ID);
+									OM:operator <http://www.openmath.org/cd/relation1#eq> ;
+									CSS:references :Mixing_output_liquid2_massFraction_ID ,
+													:Mixing_input_liquid2_massFraction_ID  .
+
+###  Liquid3 mass fraction is passed to output
+:Liquid3MassFractionConstraint rdf:type owl:NamedIndividual ,
+											OM:Application ,
+											CSS:CapabilityConstraint ;
+									OM:arguments (:Mixing_output_liquid3_massFraction_ID :Mixing_input_liquid3_massFraction_ID);
+									OM:operator <http://www.openmath.org/cd/relation1#eq> ;
+									CSS:references :Mixing_output_liquid3_massFraction_ID ,
+													:Mixing_input_liquid3_massFraction_ID  .
+
+
+
